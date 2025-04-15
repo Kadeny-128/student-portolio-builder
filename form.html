@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Build Your Resume</title>
+    <!-- You can include your CSS file here -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Create Your Resume</h1>
+    <form id="portfolioForm">
+      <!-- Personal Information -->
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Your Full Name"
+        required
+      />
+
+      <label for="school">School:</label>
+      <input
+        type="text"
+        id="school"
+        name="school"
+        placeholder="Your School Name"
+        required
+      />
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" placeholder="City" />
+
+      <label for="state">State:</label>
+      <input type="text" id="state" name="state" placeholder="State" />
+
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="you@example.com"
+        required
+      />
+
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" />
+
+      <!-- Education Information -->
+      <fieldset>
+        <legend>Education</legend>
+        <label for="edu1">Education 1:</label>
+        <input
+          type="text"
+          id="edu1"
+          name="edu1"
+          placeholder="e.g., 2020–present — Your High School"
+        />
+
+        <label for="edu2">Education 2:</label>
+        <input
+          type="text"
+          id="edu2"
+          name="edu2"
+          placeholder="e.g., 2018–2020 — Your Middle School"
+        />
+
+        <label for="edu3">Education 3:</label>
+        <input
+          type="text"
+          id="edu3"
+          name="edu3"
+          placeholder="e.g., 2012–2018 — Your Elementary School"
+        />
+      </fieldset>
+
+      <!-- Achievements and Skills -->
+      <label for="achievements">Major Achievements:</label>
+      <textarea
+        id="achievements"
+        name="achievements"
+        placeholder="Describe your achievements"
+      ></textarea>
+
+      <label for="skills">Soft Skills:</label>
+      <textarea
+        id="skills"
+        name="skills"
+        placeholder="List your soft skills"
+      ></textarea>
+
+      <button type="submit">Generate Resume</button>
+    </form>
+
+    <script src="script.js"></script>
+  </body>
+</html>

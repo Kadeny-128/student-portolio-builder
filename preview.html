@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portfolio Preview</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="portfolio">
+      <div class="resume-header">
+        <h1 id="name"></h1>
+        <div class="info-grid">
+          <p><strong>School:</strong> <span id="school"></span></p>
+          <p><strong>City:</strong> <span id="city"></span></p>
+          <p><strong>State:</strong> <span id="state"></span></p>
+          <p><strong>Email:</strong> <span id="email"></span></p>
+          <p><strong>Phone:</strong> <span id="phone"></span></p>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="resume-section">
+        <h2>Education</h2>
+        <ul id="education">
+          <!-- Education items will be inserted here -->
+        </ul>
+      </div>
+
+      <div class="resume-section">
+        <h2>Major Achievements</h2>
+        <p id="achievements"></p>
+      </div>
+
+      <div class="resume-section">
+        <h2>Soft Skills</h2>
+        <p id="skills"></p>
+      </div>
+    </div>
+
+    <button id="downloadBtn">Download as PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
