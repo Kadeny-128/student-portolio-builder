@@ -7,7 +7,7 @@
     <!-- You can include your CSS file here -->
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body class="form-page">
     <h1>Create Your Resume</h1>
     <form id="portfolioForm">
       <!-- Personal Information -->
@@ -50,30 +50,8 @@
       <!-- Education Information -->
       <fieldset>
         <legend>Education</legend>
-        <label for="edu1">Education 1:</label>
-        <input
-          type="text"
-          id="edu1"
-          name="edu1"
-          placeholder="e.g., 2020–present — Your High School"
-        />
-        <br />
-
-        <label for="edu2">Education 2:</label>
-        <input
-          type="text"
-          id="edu2"
-          name="edu2"
-          placeholder="e.g., 2018–2020 — Your Middle School"
-        />
-        <br />
-        <label for="edu3">Education 3:</label>
-        <input
-          type="text"
-          id="edu3"
-          name="edu3"
-          placeholder="e.g., 2012–2018 — Your Elementary School"
-        />
+        <label for="education">Education (one per line):</label>
+        <textarea name="education" id="education" rows="5" required></textarea>
       </fieldset>
 
       <!-- Achievements and Skills -->
@@ -95,5 +73,26 @@
     </form>
 
     <script src="script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault(); // prevent page reload
+
+          const formData = new FormData(form);
+          const resumeData = {};
+
+          formData.forEach((value, key) => {
+            resumeData[key] = value.trim();
+          });
+
+          localStorage.setItem("resumeData", JSON.stringify(resumeData));
+
+          window.location.href = "preview.html"; // 🚀 redirect to preview
+        });
+      });
+    </script>
   </body>
 </html>

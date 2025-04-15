@@ -1,52 +1,99 @@
 document.addEventListener("DOMContentLoaded", () => {
-	// Check if we're on the form page by looking for the form element.
-	const form = document.getElementById("portfolioForm");
-	
-	if (form) {
-	  // If the form exists, listen for submission.
+	const isPreviewPage = window.location.pathname.includes("preview.html");
+	const isFormPage = document.querySelector("form");
+  
+	if (isPreviewPage) {
+	  const resumeData = loadResumeData();
+	  if (resumeData) {
+		populateResume(resumeData);
+	  } else {
+		console.warn("No resume data found in localStorage.");
+	  }
+  
+	  const downloadBtn = document.getElementById("downloadBtn");
+	  if (downloadBtn) {
+		downloadBtn.addEventListener("click", downloadPDF);
+	  }
+	}
+  
+	if (isFormPage) {
+	  const form = document.querySelector("form");
 	  form.addEventListener("submit", (e) => {
 		e.preventDefault();
-		
-		// Gather form data into an object.
+  
 		const formData = new FormData(form);
-		const userData = {};
+		const resumeData = {};
+  
 		formData.forEach((value, key) => {
-		  userData[key] = value;
+		  if (key === "education") {
+			resumeData.education = value; // Save as newline-separated string
+		  } else {
+			resumeData[key] = value.trim();
+		  }
 		});
-		
-		// Save the data in localStorage.
-		localStorage.setItem("portfolioData", JSON.stringify(userData));
-		
-		// Redirect to the preview page.
+  
+		localStorage.setItem("resumeData", JSON.stringify(resumeData));
 		window.location.href = "preview.html";
 	  });
 	}
-  
-	// Check if we're on the preview page by looking for the portfolio container.
-	const portfolio = document.getElementById("portfolio");
-	if (portfolio) {
-	  const data = JSON.parse(localStorage.getItem("portfolioData"));
-	  if (data) {
-		// Set the text content for each field.
-		document.getElementById("name").textContent = data.name || "";
-		document.getElementById("school").textContent = data.school || "";
-		document.getElementById("city").textContent = data.city || "";
-		document.getElementById("state").textContent = data.state || "";
-		document.getElementById("email").textContent = data.email || "";
-		document.getElementById("phone").textContent = data.phone || "";
-		document.getElementById("achievements").textContent = data.achievements || "";
-		document.getElementById("skills").textContent = data.skills || "";
-  
-		// Populate the Education list.
-		const educationList = document.getElementById("education");
-		["edu1", "edu2", "edu3"].forEach((field) => {
-		  if (data[field]) {
-			const li = document.createElement("li");
-			li.textContent = data[field];
-			educationList.appendChild(li);
-		  }
-		});
-	  }
-	}
   });
+  
+  function loadResumeData() {
+	try {
+	  const data = localStorage.getItem("resumeData");
+	  return data ? JSON.parse(data) : null;
+	} catch (error) {
+	  console.error("Error parsing resume data from localStorage:", error);
+	  return null;
+	}
+  }
+  
+  function populateResume(data) {
+	const getOrDefault = (value, fallback = "(Not Provided)") =>
+	  value?.trim() ? value : fallback;
+  
+	// Basic fields
+	document.getElementById("name").textContent = getOrDefault(data.name);
+	document.getElementById("school").textContent = getOrDefault(data.school);
+	document.getElementById("city").textContent = getOrDefault(data.city);
+	document.getElementById("state").textContent = getOrDefault(data.state);
+	document.getElementById("email").textContent = getOrDefault(data.email);
+	document.getElementById("phone").textContent = getOrDefault(data.phone);
+  
+	// Education (multi-line input turned into <li>)
+	const educationList = document.getElementById("education");
+	educationList.innerHTML = "";
+	const educationItems = data.education?.split("\n") || [];
+	educationItems.forEach(item => {
+	  if (item.trim()) {
+		const li = document.createElement("li");
+		li.textContent = item.trim();
+		educationList.appendChild(li);
+	  }
+	});
+  
+	// Major Achievements and Skills
+	document.getElementById("achievements").textContent = getOrDefault(data.achievements);
+	document.getElementById("skills").textContent = getOrDefault(data.skills);
+  }
+  
+  function downloadPDF() {
+	const element = document.getElementById("portfolio");
+	const options = {
+	  margin: 0,
+	  filename: "resume.pdf",
+	  image: { type: "jpeg", quality: 0.98 },
+	  html2canvas: {
+		scale: 2,
+		useCORS: true,
+	  },
+	  jsPDF: {
+		unit: "mm",
+		format: "a4",
+		orientation: "portrait",
+	  },
+	};
+  
+	html2pdf().from(element).set(options).save();
+  }
   
